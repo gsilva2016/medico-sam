@@ -1,4 +1,4 @@
-# MedicoSAM: Towards foundation models for medical image segmentation
+# MedicoSAM: Robust Improvement of SAM for Medical Imaging
 
 <a href="https://github.com/computational-cell-analytics/medico-sam"><img src="https://github.com/computational-cell-analytics/medico-sam/blob/master/docs/logos/logo.png" width="200" align="right">
 
