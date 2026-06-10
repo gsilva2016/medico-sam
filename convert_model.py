@@ -147,7 +147,11 @@ dummy_inputs = {
 with warnings.catch_warnings():
     warnings.filterwarnings("ignore", category=torch.jit.TracerWarning)
     warnings.filterwarnings("ignore", category=UserWarning)
-    ov_model = ov.convert_model(exportable_model, example_input=dummy_inputs)
+    ov_model = ov.convert_model(
+        exportable_model,
+        example_input=dummy_inputs,
+        input=([1,embed_dim,*embed_size], [1,5,2], [1,5])
+    )
     ov.save_model(ov_model, ov_model_path)
 
 print("Finished converting SAM OpenVINO model")
