@@ -54,13 +54,9 @@ class ResizeLongestSide:
         return (newh, neww)
 
 
-def preprocess_image(image: np.ndarray, resizer, img_size):
+def preprocess_image(image: np.ndarray, resizer, img_size, mean, std):
     resized_image = resizer.apply_image(image)
-    resized_image = (resized_image.astype(np.float32) - [123.675, 116.28, 103.53]) / [
-        58.395,
-        57.12,
-        57.375,
-    ]
+    resized_image = (resized_image.astype(np.float32) - mean) / std
     resized_image = np.expand_dims(np.transpose(resized_image, (2, 0, 1)).astype(np.float32), 0)
 
     # Pad
@@ -93,6 +89,9 @@ def postprocess_masks(masks: np.ndarray, orig_size, resizer):
 
 
 def draw_mask(mask, overlay_image):
-    h, w = mask.shape[-2:]
+    if len(mask.shape) == 2:
+        h,w = mask.shape
+    else:
+        h, w = mask.shape[-2:]
     mask_image = mask.reshape(h, w, 1)  
     return draw_outlines(overlay_image, mask_image, h, w)
